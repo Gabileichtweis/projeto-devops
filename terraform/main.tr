@@ -1,0 +1,14 @@
+resource "docker_image" "react_app" {
+  name = "node:20-alpine"
+}
+
+resource "docker_container" "react_container" {
+  name  = "react-devops"
+
+  image = docker_image.react_app.image_id
+
+  ports {
+    internal = 3000
+    external = 3000
+  }
+}
