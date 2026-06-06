@@ -8,15 +8,17 @@ on:
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Simulação de Deploy
-        run: |
-          echo "Aplicação aprovada na CI"
-          echo "Iniciando deploy..."
-          echo "Deploy concluído!"
-          
+      - name: Construir imagem Docker
+        run: docker build -t projeto-devops -f docker/Dockerfile .
+
+      - name: Executar deploy
+        run: echo "Deploy realizado com sucesso"
+        
